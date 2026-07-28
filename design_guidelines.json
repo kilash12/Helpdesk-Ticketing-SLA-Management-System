@@ -1,0 +1,126 @@
+{
+  "theme": "serious_b2b_swiss_technical",
+  "archetype": "Swiss & High-Contrast",
+  "emotional_tone": "Authority, Clarity, Truth, Urgency",
+  "typography": {
+    "headings": {
+      "family": "Cabinet Grotesk, sans-serif",
+      "weights": ["500", "700", "900"],
+      "classes": "font-sans tracking-tight text-foreground"
+    },
+    "body": {
+      "family": "IBM Plex Sans, sans-serif",
+      "weights": ["400", "500", "600"],
+      "classes": "font-sans text-foreground"
+    },
+    "data_mono": {
+      "family": "JetBrains Mono, monospace",
+      "weights": ["400", "500"],
+      "classes": "font-mono tracking-tight",
+      "usage": "Ticket IDs, SLA Countdowns, Audit Logs"
+    },
+    "instructions": "DO NOT use Inter or Roboto. Use Cabinet Grotesk for prominent headings. IBM Plex Sans for dense data/body text. Use JetBrains Mono for all numeric SLA counters to emphasize precision."
+  },
+  "colors": {
+    "light_mode": {
+      "background": "#F8F9FA",
+      "surface": "#FFFFFF",
+      "border": "#E2E8F0",
+      "text_primary": "#0F172A",
+      "text_secondary": "#64748B",
+      "primary": "#0F172A",
+      "primary_foreground": "#FFFFFF",
+      "muted": "#F1F5F9"
+    },
+    "dark_mode": {
+      "background": "#020617",
+      "surface": "#0F172A",
+      "border": "#1E293B",
+      "text_primary": "#F8FAFC",
+      "text_secondary": "#94A3B8",
+      "primary": "#F8FAFC",
+      "primary_foreground": "#0F172A",
+      "muted": "#1E293B"
+    },
+    "semantic": {
+      "ticket_open": "#3B82F6",
+      "ticket_assigned": "#8B5CF6",
+      "ticket_progress": "#0EA5E9",
+      "ticket_waiting": "#F59E0B",
+      "ticket_escalated": "#DC2626",
+      "ticket_resolved": "#10B981",
+      "ticket_closed": "#64748B",
+      "priority_low": "#64748B",
+      "priority_medium": "#3B82F6",
+      "priority_high": "#F59E0B",
+      "priority_critical": "#DC2626"
+    },
+    "instructions": "Strictly avoid generic purple gradients. Rely on stark contrast (Black/White or Deep Slate/White). Color should be used purely functionally to denote status, priority, and SLA risk."
+  },
+  "layouts": {
+    "general": "Sidebar navigation + Main content area. Left-sidebar must be collapsible for high-density focus.",
+    "dashboard_grid": "MODE B (High Density Grid). Base grid-cols-1 md:grid-cols-3 lg:grid-cols-4. Tight gaps (gap-4 or gap-6). Use 'The Technical Look' with exposed grid lines (border-collapse, border-r, border-b) for admin metric panels.",
+    "ticket_detail": "Two-column layout (lg:grid-cols-3). Main wide column (col-span-2) for message threads and public/internal tabbed comments. Narrow sidebar (col-span-1) for Ticket Metadata, SLA countdown, Status changes, and Assignee details.",
+    "tables": "Full-width, sticky-header tables for ticket lists. Use compact padding (py-2 px-4) for dense data readability. Row hover states must be explicit (hover:bg-muted/50)."
+  },
+  "visual_enhancers": {
+    "surfaces": "Grid Borders ('The Technical Look') for dashboards. Avoid heavy shadows. Use 1px sharp borders to separate widgets. Border radius should be minimal, max 6px (rounded-md) to reinforce the B2B tech feel.",
+    "sla_countdown": "Must be visually distinct. Use 'Retro-Futurism' terminal styling for the timer: black/dark slate background, monospace font, glowing text drop-shadow if SLA is breached (drop-shadow-[0_0_8px_rgba(220,38,38,0.5)]).",
+    "badges": "Pill-shaped (rounded-full) or sharp rectangular (rounded-sm) with high-contrast text. Example: bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400 for Critical.",
+    "notifications": "Real-time dropdown with unread dot. Include a toast notification (using Sonner) for SLA breach alerts or new ticket assignments."
+  },
+  "motion": {
+    "hover_states": "-translate-y-[1px] with shadow-sm for interactive cards. Explicit background color change for table rows and list items.",
+    "sla_urgency": "If SLA is in 'Warning' (< 1hr) or 'Breached', add a slow pulse animation (animate-pulse) to the indicator dot or border.",
+    "page_transitions": "Keep animations minimal and snappy to respect the serious B2B operational environment."
+  },
+  "components_instructions": {
+    "charts": "Use Recharts for SLA trend analysis (line charts) and Agent performance (bar charts). Apply semantic colors (green/yellow/red) directly to chart bars based on threshold values.",
+    "tables": "Use Shadcn Table component. Implement explicit data-testid on action buttons (e.g., data-testid='ticket-row-123-escalate-btn').",
+    "forms": "Use Shadcn Form, Input, Select, and Textarea. Maintain left-aligned labels.",
+    "tabs": "Use Shadcn Tabs to strictly separate 'Public Reply' and 'Internal Note' in the ticket detail view. The Internal Note area should have a distinct background tint (e.g., bg-amber-50 dark:bg-amber-950/20) to prevent accidental public posting.",
+    "feedback": "Star rating modal must be accessible. Use lucide-react 'Star' icons with fill transition on hover."
+  },
+  "accessibility": {
+    "contrast": "Ensure all text, especially SLA timers and badges, pass WCAG AA (minimum 4.5:1 ratio).",
+    "testing": "All interactive elements MUST include data-testid. Examples: data-testid='login-submit-button', data-testid='create-ticket-btn', data-testid='sla-timer-display'."
+  },
+  "media_and_icons": {
+    "icon_library": "lucide-react",
+    "image_urls": [
+      {
+        "url": "https://images.unsplash.com/photo-1506863530036-1efeddceb993?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjY2NzF8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBwcm9maWxlJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzg1MTM1Njk3fDA&ixlib=rb-4.1.0&q=85",
+        "category": "agent_avatar_1",
+        "description": "Professional profile portrait for Agent Assignee"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1607746882042-944635dfe10e?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjY2NzF8MHwxfHNlYXJjaHwzfHxwcm9mZXNzaW9uYWwlMjBwcm9maWxlJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzg1MTM1Njk3fDA&ixlib=rb-4.1.0&q=85",
+        "category": "agent_avatar_2",
+        "description": "Professional profile portrait for Customer/Admin"
+      },
+      {
+        "url": "https://images.unsplash.com/photo-1782916678870-91ed75745788?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2MjJ8MHwxfHNlYXJjaHwzfHxhYnN0cmFjdCUyMGNvbXBhbnklMjBsb2dvfGVufDB8fHx8MTc4NTEzNTY5Nnww&ixlib=rb-4.1.0&q=85",
+        "category": "company_logo",
+        "description": "Abstract tech company logo for sidebar brand header"
+      }
+    ],
+    "instructions": "Use lucide-react for all system icons. Use the provided avatar URLs for mocking agent/customer profiles in the tables and ticket message threads."
+  },
+  "UNIVERSAL_GUIDELINES_FOR_MAIN_AGENT": [
+    "You tend to converge toward generic, 'on distribution' outputs. Make creative, distinctive frontends that surprise and delight.",
+    "Dark colors look good when used independently without gradients. DO NOT use dark colors as gradients.",
+    "Don't make generic centered layouts, simplistic gradients, and uniform styling.",
+    "Create depth through layered design elements with z-index hierarchy.",
+    "Use glass-morphism effects with backdrop filters (12-24px blur).",
+    "You MUST NOT apply universal transition. Eg: transition: all. Always add transitions for specific interactive elements like button, input excluding transforms.",
+    "You MUST NOT center align the app container, ie do not add .App { text-align: center; } in the css file. This disrupts the human natural reading flow of text.",
+    "Always use modern button styles like pill-shaped, or sharp button with interaction animations & color relevant to the app style.",
+    "NEVER: use AI assistant Emoji characters like 🤖🧠💭💡🔮🎯 etc for icons.",
+    "Every interaction needs micro-animations - hover states, transitions, parallax effects, and entrance animations.",
+    "Use 2-3x more spacing than feels comfortable. Cramped designs look cheap.",
+    "Subtle grain textures, noise overlays, custom cursors, selection states, and loading animations separate good from extraordinary.",
+    "Prioritize using pre-existing components from src/components/ui when applicable.",
+    "Use sonner for toasts. Sonner component are located in /app/src/components/ui/sonner.js",
+    "All interactive elements MUST have data-testid attributes."
+  ]
+}

@@ -1,0 +1,283 @@
+Task 2 - Helpdesk Ticketing & SLA Management System
+Tech Stack
+• Backend: Python using Django REST Framework or FastAPI
+• Frontend: React
+• Authentication: JWT using HTTP-only Cookies
+• Database: PostgreSQL / MySQL / SQLite
+• Background Jobs: Celery with Redis or equivalent
+• Real-time Updates: WebSocket or Server-Sent Events
+Task
+Develop a Helpdesk Ticketing and SLA Management System where customers create support tickets and
+agents manage assignment, priority, communication, SLA deadlines, escalation, and resolution.
+User Roles
+• Customer
+• Support Agent
+• Admin
+Authentication
+• Registration
+• Login
+• Current User Profile
+• Refresh Access Token
+• Logout
+• Change Password
+• Forgot Password
+• Reset Password
+Role Permissions - Customer
+• Create tickets
+• View only own tickets
+• Add public comments
+• Upload attachments
+• Reopen a resolved ticket
+• Close own ticket
+• Rate support experience
+Role Permissions - Support Agent
+• View assigned tickets
+• View unassigned department tickets
+Full Stack Interview Tasks - Second Round Page 9
+• Self-assign unassigned tickets
+• Update priority and status
+• Add internal notes and public replies
+• Escalate tickets
+• Resolve tickets
+Role Permissions - Admin
+• View all tickets
+• Manage users, agents, and departments
+• Assign and reassign tickets
+• Configure SLA rules
+• View reports and audit logs
+• Reopen or close any ticket
+Department Management
+• Name
+• Description
+• Is Active
+• Created Date
+• Updated Date
+• Department deletion is allowed only when no active ticket is linked.
+Ticket Fields
+• Ticket Number
+• Subject
+• Description
+• Department
+• Priority
+• Status
+• Created By
+• Assigned Agent
+• SLA Rule
+• First Response Due At
+• Resolution Due At
+• First Responded At
+• Resolved At
+• Closed At
+• Created Date
+• Updated Date
+Full Stack Interview Tasks - Second Round Page 10
+Ticket Number
+• Generate a unique immutable ticket number, for example TKT-2026-000001.
+Ticket Priority
+• Low
+• Medium
+• High
+• Critical
+Ticket Status
+• Open
+• Assigned
+• In Progress
+• Waiting for Customer
+• Escalated
+• Resolved
+• Closed
+• Reopened
+Status Transition Rules
+• Backend must enforce valid transitions.
+• Examples: Open -> Assigned; Assigned -> In Progress; In Progress -> Waiting for Customer; In Progress ->
+Escalated; In Progress -> Resolved; Resolved -> Closed; Resolved/Closed -> Reopened.
+• Invalid direct transitions such as Open -> Closed must return a validation error.
+Ticket Assignment Rules
+• Admin can assign any ticket to an active agent.
+• Agent can self-assign an unassigned ticket.
+• Agent cannot assign a ticket to another agent.
+• Assigned agent must belong to the ticket department.
+• Inactive agents cannot receive new tickets.
+• Reassignment history must be stored.
+SLA Management
+• Admin configures SLA rules by priority.
+• Each rule stores First Response Time and Resolution Time.
+• At ticket creation, assign the active SLA rule and calculate due timestamps.
+• Store the exact SLA rule used at creation.
+SLA Breach Rules
+• Identify first-response breach, resolution breach, and approaching deadline.
+Full Stack Interview Tasks - Second Round Page 11
+• Approaching deadline means less than 20% of allowed time remains.
+Background Jobs
+• Check SLA deadlines
+• Send SLA warning and breach notifications
+• Send assignment notifications
+• Send password reset email
+• Auto-close resolved tickets
+Auto-Close Rule
+• Resolved tickets should automatically move to Closed after 72 hours if the customer does not reopen them.
+Ticket Comments
+• Fields: Ticket, Message, Comment Type, Created By, Created Date, Updated Date
+• Comment types: Public Reply and Internal Note
+• Customers can add only public replies.
+• Internal notes are visible only to agents/admins.
+• Comments appear in chronological order.
+Attachments
+• Supported: JPG, JPEG, PNG, PDF, DOCX, TXT, CSV
+• Maximum size: 10 MB
+• Validate extension, MIME type, file size, empty file, and filename safety.
+Ticket Escalation
+• Only Agent or Admin can escalate.
+• Escalation reason is required.
+• Priority must increase.
+• Notify Admin.
+• Preserve escalation history.
+Customer Satisfaction Rating
+• Rating from 1 to 5
+• Only ticket owner can submit
+• Only one feedback entry per ticket
+• Allowed only for Resolved or Closed tickets
+Audit Log
+• Track user, action, entity type, entity ID, old value, new value, IP address, and timestamp.
+• Audit logs must be immutable through normal APIs.
+Search and Filtering
+• Search by ticket number and subject
+Full Stack Interview Tasks - Second Round Page 12
+• Filter by status, priority, department, assigned agent, SLA breach, and date range
+• Sort by created date, updated date, and priority
+• Pagination
+Frontend Pages
+• Public: Login, Registration, Forgot Password, Reset Password
+• Customer: Dashboard, Create Ticket, My Tickets, Ticket Details, Feedback, Profile
+• Agent: Dashboard, Assigned Tickets, Unassigned Tickets, SLA Warning Queue, Escalated Tickets
+• Admin: Dashboard, All Tickets, User/Agent/Department Management, SLA Configuration, Reports, Audit Logs
+Real-Time Updates
+• New ticket
+• Ticket assigned
+• New public reply
+• New internal note for agents
+• Status change
+• Escalation
+• SLA warning and breach
+Notification Management
+• View notifications
+• Mark one or all as read
+• Unread count
+• Real-time notification updates
+Concurrency Requirement
+• Two agents may self-assign simultaneously.
+• Only one must succeed.
+• Use a database transaction or row-level lock.
+• Second request should receive HTTP 409 Conflict.
+Security Requirements
+• JWT with HTTP-only Cookies
+• Secure and SameSite cookie settings
+• Refresh Token Rotation
+• Role-based and object-level authorization
+• CSRF/CORS protection
+• Rate Limiting
+• Input and file validation
+• Prevent IDOR and mass assignment
+Full Stack Interview Tasks - Second Round Page 13
+• No tokens in Local/Session Storage
+• Never expose internal notes to customers
+• Avoid sensitive logging
+Automated Tests
+• Registration and Login
+• JWT cookie flow and rotation
+• Customer ticket ownership
+• Agent/Admin permissions
+• Invalid status transitions
+• Concurrent self-assignment
+• SLA calculations and breach detection
+• Internal note visibility
+• File upload validation
+• Escalation and auto-close jobs
+• Audit log creation
+• Cross-user ticket access prevention
+• Feedback duplication prevention
+Required APIs
+Authentication APIs
+POST /api/auth/register/
+POST /api/auth/login/
+POST /api/auth/refresh/
+POST /api/auth/logout/
+GET /api/auth/me/
+POST /api/auth/change-password/
+POST /api/auth/forgot-password/
+POST /api/auth/reset-password/
+Ticket APIs
+GET /api/tickets/
+POST /api/tickets/
+GET /api/tickets/{id}/
+PUT /api/tickets/{id}/
+PATCH /api/tickets/{id}/
+DELETE /api/tickets/{id}/
+Ticket Actions
+Full Stack Interview Tasks - Second Round Page 14
+POST /api/tickets/{id}/assign/
+POST /api/tickets/{id}/self-assign/
+POST /api/tickets/{id}/change-status/
+POST /api/tickets/{id}/change-priority/
+POST /api/tickets/{id}/escalate/
+POST /api/tickets/{id}/resolve/
+POST /api/tickets/{id}/reopen/
+POST /api/tickets/{id}/close/
+Reports
+GET /api/reports/dashboard/
+GET /api/reports/agent-performance/
+GET /api/reports/sla-summary/
+GET /api/reports/ticket-trends/
+Bonus Features
+• Docker Compose
+• PostgreSQL
+• Redis
+• Celery Worker and Beat
+• Nginx
+• Business-hours SLA
+• Holiday Calendar
+• CSV/PDF export
+• Agent workload balancing
+• Ticket merge and tags
+• Saved filters
+• Dark Mode
+• Swagger/OpenAPI
+• Postman Collection
+• CI/CD with GitHub Actions
+• Structured Logging
+• Sentry Integration
+Submission
+• Git Repository
+• Backend and Frontend Source Code
+• Database Migrations
+• Celery and WebSocket Configuration
+Full Stack Interview Tasks - Second Round Page 15
+• .env.example
+• README
+• API Documentation
+• Postman Collection
+• Automated Tests
+• Docker Configuration
+• Sample Admin Credentials
+• Architecture Diagram
+Evaluation Criteria
+• Code and database design
+• Authentication and role-based security
+• Object-level permissions
+• Ticket lifecycle implementation
+• SLA and background job design
+• Real-time communication
+• Concurrency handling
+• Audit logging
+• File security
+• React architecture and state management
+• Test coverage
+• Documentation and Git commit quality
+Important Conditions
+• Backend is the source of truth for status, permissions, and SLA calculations.
+• Customers must never see internal notes.
+• Users must not access another user's data by changing IDs.
+• Assignment must be concurrency-safe.
+• Audit logs must be immutable.
+• Background jobs must be idempotent.
+• Repeated SLA jobs must not create duplicate notifications.
